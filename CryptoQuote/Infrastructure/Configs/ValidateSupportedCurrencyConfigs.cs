@@ -1,4 +1,4 @@
-﻿namespace CryptoQuote.Configs;
+﻿namespace CryptoQuote.Infrastructure.Configs;
 
 public class ValidateSupportedCurrencyConfigs(int minLength) : ValidationAttribute
 {
@@ -12,7 +12,7 @@ public class ValidateSupportedCurrencyConfigs(int minLength) : ValidationAttribu
 
     public override bool IsValid(object value)
     {
-        if (value is not IList<string> list || list.Count == 0)
+        if (value is not string[] list || list.Length == 0)
         {
             return false;
         }

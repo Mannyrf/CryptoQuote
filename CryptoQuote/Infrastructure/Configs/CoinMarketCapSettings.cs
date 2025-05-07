@@ -1,4 +1,4 @@
-﻿namespace CryptoQuote.Configs;
+﻿namespace CryptoQuote.Infrastructure.Configs;
 
 public sealed record CoinMarketCapConfigs
 {

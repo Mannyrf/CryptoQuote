@@ -1,4 +1,7 @@
-using CryptoQuote.Services;
+using CryptoQuote.Infrastructure.Configs;
+using CryptoQuote.Infrastructure.Externals.CryptoQuote;
+using CryptoQuote.Infrastructure.Externals.ExchangeRates;
+using CryptoQuote.Services.CryptoPriceService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,14 +22,21 @@ builder.Services.AddOptions<SupportedCurrencyConfigs>()
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
-builder.Services.AddScoped<ICryptoQuoteService, CryptoQuoteService>();
-builder.Services.AddScoped<IExchangeRatesService, ExchangeRatesService>();
+builder.Services.AddHttpClient<IExchangeRatesClient, ExchangeRatesClient>();
 
-builder.Services.AddControllers();
+
+builder.Services.AddHttpClient<ICoinMarketCapClient, CoinMarketCapClient>();
+
+builder.Services.AddSingleton<ICoinMarketCapClient, CoinMarketCapClient>();
+builder.Services.AddSingleton<IExchangeRatesClient, ExchangeRatesClient>();
+
+builder.Services.AddScoped<ICryptoPriceService, CryptoPriceService>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+app.UseHttpsRedirection();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -35,21 +45,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/api/quotes/{symbol}",
-    async (string symbol, ICryptoQuoteService service) =>
+    async (string symbol, ICryptoPriceService service) =>
     {
-        return Results.Ok(await service.GetQuoteAsync(symbol));
+        return Results.Ok(await service.GetCryptoPriceInAcceptableCurrenciesAsync(symbol));
     });
-
-app.MapGet("/api/rates",
-    async (IExchangeRatesService service) =>
-    {
-        return Results.Ok(await service.GetPriceAsync());
-    });
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();
