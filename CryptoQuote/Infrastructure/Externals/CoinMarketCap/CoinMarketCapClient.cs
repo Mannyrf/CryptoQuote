@@ -1,9 +1,10 @@
 ﻿using CryptoQuote.Infrastructure.Configs;
+using CryptoQuote.Infrastructure.Externals.CryptoQuote;
 using CryptoQuote.Models.External.CryptoQuote;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 
-namespace CryptoQuote.Infrastructure.Externals.CryptoQuote;
+namespace CryptoQuote.Infrastructure.Externals.CoinMarketCap;
 
 public sealed class CoinMarketCapClient : ICoinMarketCapClient
 {

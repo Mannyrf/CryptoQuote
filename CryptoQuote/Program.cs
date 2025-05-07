@@ -1,9 +1,13 @@
 using CryptoQuote.Infrastructure.Configs;
+using CryptoQuote.Infrastructure.Externals.CoinMarketCap;
 using CryptoQuote.Infrastructure.Externals.CryptoQuote;
 using CryptoQuote.Infrastructure.Externals.ExchangeRates;
 using CryptoQuote.Services.CryptoPriceService;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton(TimeProvider.System);
 
 // Add services to the container.
 
@@ -27,8 +31,8 @@ builder.Services.AddHttpClient<IExchangeRatesClient, ExchangeRatesClient>();
 
 builder.Services.AddHttpClient<ICoinMarketCapClient, CoinMarketCapClient>();
 
-builder.Services.AddSingleton<ICoinMarketCapClient, CoinMarketCapClient>();
-builder.Services.AddSingleton<IExchangeRatesClient, ExchangeRatesClient>();
+builder.Services.Decorate<ICoinMarketCapClient, CachingCoinMarketCapClientDecorator>();
+builder.Services.Decorate<IExchangeRatesClient, CachingExchangeRatesClientDecorator>();
 
 builder.Services.AddScoped<ICryptoPriceService, CryptoPriceService>();
 

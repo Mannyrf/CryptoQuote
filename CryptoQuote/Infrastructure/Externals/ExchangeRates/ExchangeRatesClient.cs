@@ -5,11 +5,11 @@ using System.Net.Http.Headers;
 
 namespace CryptoQuote.Infrastructure.Externals.ExchangeRates;
 
-public class ExchangeRatesClient(HttpClient httpClient, IOptions<ExchangeRatesConfigs> exchangeRatesConfigs) : IExchangeRatesClient
+public sealed class ExchangeRatesClient(HttpClient _httpClient,
+                                        IOptions<ExchangeRatesConfigs> exchangeRatesConfigs) : IExchangeRatesClient
 {
     const string AcceptableResponseType = "application/json";
 
-    private readonly HttpClient _httpClient = httpClient;
     private readonly ExchangeRatesConfigs _exchangeRatesConfigs = exchangeRatesConfigs.Value;
 
     public async Task<ExchangeRatesResponse?> GetRatesAsync(string[] requestCurrencies, CancellationToken cancellationToken = default)
@@ -30,7 +30,7 @@ public class ExchangeRatesClient(HttpClient httpClient, IOptions<ExchangeRatesCo
         _httpClient.DefaultRequestHeaders.Accept.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(AcceptableResponseType));
 
-        JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
+        JsonSerializerOptions _jsonSerializerOptions = new()
         {
             PropertyNameCaseInsensitive = true,
             DictionaryKeyPolicy = JsonNamingPolicy.CamelCase

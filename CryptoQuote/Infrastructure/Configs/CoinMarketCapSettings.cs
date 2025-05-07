@@ -9,4 +9,7 @@ public sealed record CoinMarketCapConfigs
 
     [Url]
     public required string BaseUrl { get; init; }
+
+    [Range(0, int.MaxValue)]
+    public required double CacheMinutes { get; init; }
 }
