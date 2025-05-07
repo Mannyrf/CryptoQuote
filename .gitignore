@@ -55,3 +55,4 @@ nunit-*.xml
 /CryptoQuote/appsettings.Development.json
 /.vs/CryptoQuote
 /.vs/ProjectEvaluation
+/.vs
