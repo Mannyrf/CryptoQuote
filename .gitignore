@@ -52,7 +52,6 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
-/CryptoQuote/appsettings.Development.json
 /.vs/CryptoQuote
 /.vs/ProjectEvaluation
 /.vs
