@@ -43,7 +43,8 @@ To run the application locally:
 
 	dotnet run --project CryptoQuote
 
-The application will start and expose its API endpoints. By default, it runs on `https://localhost:7272`.
+- The application will start and expose its API endpoints. By default, it runs on `https://localhost:7272`.
+- To explore APIs using Scalar try `https://localhost:7272/scalar/v1`
 
 ### Running Tests
 

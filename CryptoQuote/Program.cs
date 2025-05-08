@@ -5,6 +5,7 @@ using CryptoQuote.Infrastructure.Externals.CryptoQuote;
 using CryptoQuote.Infrastructure.Externals.ExchangeRates;
 using CryptoQuote.Infrastructure.Http;
 using CryptoQuote.Services.CryptoPriceService;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +48,8 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 app.UseHttpsRedirection();
+
+app.MapScalarApiReference();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

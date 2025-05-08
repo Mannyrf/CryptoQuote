@@ -1,6 +1,7 @@
-@CryptoQuote_HostAddress = http://localhost:5259
+@CryptoQuote_HostAddress = https://localhost:7272
 
-GET {{CryptoQuote_HostAddress}}/weatherforecast/
+### Get Crypto Price by Symbol
+GET {{CryptoQuote_HostAddress}}/api/quotes/BTC
 Accept: application/json
 
 ###
