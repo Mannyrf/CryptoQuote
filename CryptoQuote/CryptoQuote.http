@@ -1,0 +1,7 @@
+@CryptoQuote_HostAddress = https://localhost:7272
+
+### Get Crypto Price by Symbol
+GET {{CryptoQuote_HostAddress}}/api/quotes/BTC
+Accept: application/json
+
+###
